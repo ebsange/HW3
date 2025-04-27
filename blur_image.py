@@ -110,6 +110,13 @@ def read_grid(file_path):
     """
 
     # REMOVE THIS COMMENT AND REPLACE IT WITH YOUR CODE ...
+    infile = file_path
+    myfile = open(infile)
+    grid = []
+    for line in myfile:
+        grid.append(csv_line_to_list(line))
+    myfile.close()
+    return grid
 
 
 def write_grid(file_name, pixel_grid):
@@ -137,7 +144,10 @@ def get_pixel_at(pixel_grid, i, j):
     """
 
     # REMOVE THIS COMMENT AND REPLACE IT WITH YOUR CODE ...
-
+    if i < 0 or j < 0 or i >= len(pixel_grid) or j >= len(pixel_grid[0]):
+        return 0
+    else:
+        return pixel_grid[i][j]
 
 def test_get_pixel_at():
     """ Basic, brief sanity checks for get_pixel_at. """
@@ -184,7 +194,7 @@ def test_get_pixel_at():
 # Run the tests. This method prints nothing if the tests
 # pass. This method prints an error message for the first
 # error it encounters.
-# test_get_pixel_at()
+#print(test_get_pixel_at())
 
 
 def average_of_surrounding(pixel_grid, i, j):
