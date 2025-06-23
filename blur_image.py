@@ -240,6 +240,7 @@ def blur(pixel_grid):
     the input grid.
     """
     blurred_grid = []
+    
     for i in range(len(pixel_grid)):
         newline = []
         for j in range(len(pixel_grid[0])):
