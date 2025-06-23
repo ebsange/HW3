@@ -108,9 +108,11 @@ def read_grid(file_path):
     read any file written by the write_grid function.  Returns the
     grid of pixels.
     """
-
-    # REMOVE THIS COMMENT AND REPLACE IT WITH YOUR CODE ...
-
+    newgrid = []
+    myfile = open(file_path)
+    for line_of_text in myfile:
+        newgrid.append(csv_line_to_list(line_of_text))
+    return newgrid
 
 def write_grid(file_name, pixel_grid):
     """
@@ -135,6 +137,12 @@ def get_pixel_at(pixel_grid, i, j):
     Returns 0 if i or j is out of bounds for the given pixel_grid.
     Returns 0 if i or j is a negative value.
     """
+    if i < 0 or j < 0:
+        return 0
+    elif i >= len(pixel_grid) or j >= len(pixel_grid[0]):
+        return 0
+    else:
+        return pixel_grid[i][j]
 
     # REMOVE THIS COMMENT AND REPLACE IT WITH YOUR CODE ...
 
@@ -184,7 +192,7 @@ def test_get_pixel_at():
 # Run the tests. This method prints nothing if the tests
 # pass. This method prints an error message for the first
 # error it encounters.
-# test_get_pixel_at()
+test_get_pixel_at()
 
 
 def average_of_surrounding(pixel_grid, i, j):
@@ -193,10 +201,9 @@ def average_of_surrounding(pixel_grid, i, j):
     and column j and the eight pixels surrounding it.
     """
     pixel_sum = 0
-    # REMOVE THIS COMMENT AND REPLACE IT WITH YOUR CODE ...
-
-    # pixel_sum should be an integer. We intend for this to be
-    # truncating integer division.
+    for m in [i - 1, i, i + 1]:
+        for n in [j - 1, j, j + 1]:
+            pixel_sum += get_pixel_at(pixel_grid, m, n)
     return pixel_sum // 9
 
 
@@ -222,7 +229,7 @@ def test_average_of_surrounding():
         print(e)
 
 
-# test_average_of_surrounding()
+test_average_of_surrounding()
 
 
 def blur(pixel_grid):
@@ -233,9 +240,11 @@ def blur(pixel_grid):
     the input grid.
     """
     blurred_grid = []
-
-    # REMOVE THIS COMMENT AND REPLACE IT WITH YOUR CODE ...
-
+    for i in range(len(pixel_grid)):
+        newline = []
+        for j in range(len(pixel_grid[0])):
+            newline.append(average_of_surrounding(pixel_grid, i, j))
+        blurred_grid.append(newline)
 
     # The returned grid should contain NEW lists and not any copies
     # of parts of pixel_grid. See Problem 4 on the spec for more on this.
@@ -305,12 +314,13 @@ out_grid_filename = input_filename + '_blurred_grid.txt'
 
 # Step D: Apply the blur algorithm
 
-# REMOVE THIS COMMENT AND REPLACE IT WITH YOUR CODE ...
+blurred_grid = blur(input_grid)
 
 # Step E: Write the result to both output files
-
-# REMOVE THIS COMMENT AND REPLACE IT WITH YOUR CODE ...
-
+if extension == ".txt":
+    write_grid(out_grid_filename, blurred_grid)
+else:
+    write_image(out_image_filename, blurred_grid)
 
 print("Program done")
 
